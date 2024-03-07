@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/hello"
+    android:orientation="vertical"
+
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/imageViewLogo"
+        android:layout_width="425dp"
+        android:layout_height="325dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="42dp"
+        android:layout_gravity="center"
+        android:src="@mipmap/logo2_foreground" />
+
+    <EditText
+        android:id="@+id/editTextUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Username"
+        android:textColor="@color/black"
+        android:background="@drawable/edit_text_background"
+        android:padding="12dp"
+        android:layout_below="@id/imageViewLogo"
+        android:backgroundTint="@color/sky_blue"
+        android:layout_marginTop="16dp" />
+
+    <EditText
+        android:id="@+id/editTextPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:backgroundTint="@color/sky_blue"
+        android:background="@drawable/edit_text_background"
+        android:padding="12dp"
+        android:layout_below="@id/editTextUsername"
+        android:layout_marginTop="45dp" />
+
+    <Button
+        android:backgroundTint="#2929CA"
+        android:id="@+id/buttonSignIn"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_below="@id/editTextPassword"
+        android:layout_marginTop="87dp"
+
+        android:padding="16dp"
+        android:text="Sign In"
+         />
+
+
+</LinearLayout>

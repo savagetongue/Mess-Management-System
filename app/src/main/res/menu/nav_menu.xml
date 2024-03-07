@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_item_bills"
+        android:title="Bills" />
+
+    <item
+        android:id="@+id/nav_item_add"
+        android:title="Add Student" />
+
+    <item
+        android:id="@+id/nav_item_expense"
+        android:title="Expense Book" />
+
+    <item
+        android:id="@+id/nav_item_view"
+        android:title="View List" />
+</menu>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MonthSelectionActivity"
+    android:orientation="vertical"
+    android:background="@drawable/t4">
+
+
+    <ImageView
+        android:id="@+id/imageViewLogo"
+        android:layout_width="242dp"
+        android:layout_height="67dp"
+        android:layout_gravity="center"
+        android:background="@drawable/back"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:src="@drawable/bills"
+        />
+
+    <ListView
+        android:layout_marginTop="75dp"
+        android:id="@+id/monthListView"
+        android:layout_width="match_parent"
+        android:divider="@color/black"
+        android:dividerHeight="1dp"
+        android:layout_height="500dp" />
+
+    <Button
+        android:id="@+id/create_note"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+
+
+       android:layout_marginLeft="280dp"
+        android:background="@drawable/calendar"
+        android:foreground="@drawable/calendar" />
+
+</LinearLayout>

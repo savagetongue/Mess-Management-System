@@ -1,0 +1,34 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/t4"
+    android:padding="16dp">
+
+    <!-- Add a ScrollView to handle scrolling if needed -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/linearLayoutComplaints"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <!-- ImageView to display the attached image -->
+            <ImageView
+                android:id="@+id/imageViewAttached"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                android:paddingTop="16dp" />
+
+            <!-- Complaints will be dynamically added here -->
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

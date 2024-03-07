@@ -1,0 +1,26 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/t4"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/editTextSuggestion"
+        android:layout_width="384dp"
+        android:layout_height="173dp"
+        android:hint="Enter your suggestion"
+        android:inputType="textMultiLine"
+        android:minLines="5" />
+
+    <Button
+        android:id="@+id/btnSubmitSuggestion"
+        android:layout_width="240dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="80dp"
+        android:backgroundTint="#2929CA"
+        android:layout_gravity="center"
+        android:text="Submit Suggestion" />
+
+</LinearLayout>

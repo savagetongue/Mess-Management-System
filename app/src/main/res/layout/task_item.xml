@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/taskTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Task Title"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/taskDescriptionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/taskTitleTextView"
+        android:layout_marginTop="8dp"
+        android:text="Task Description"/>
+
+    <CheckBox
+        android:id="@+id/completeCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/taskDescriptionTextView"
+        android:layout_marginTop="8dp"
+        android:text="Complete"/>
+
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/completeCheckBox"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="-76dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:backgroundTint="#2929CA"
+        android:text="Delete" />
+</RelativeLayout>

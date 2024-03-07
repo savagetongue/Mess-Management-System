@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout3"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/t4"
+    android:orientation="vertical"
+    tools:context=".Bills">
+
+
+    <ImageView
+        android:id="@+id/imageViewLogo"
+        android:layout_width="342dp"
+        android:layout_height="87dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="82dp"
+        android:background="@drawable/back"
+        android:padding="10dp"
+        android:src="@drawable/bills"
+        app:layout_constraintBottom_toTopOf="@+id/unpaid_b"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.123"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/b_paid"
+        android:layout_width="350dp"
+        android:layout_height="70dp"
+        android:backgroundTint="#2929CA"
+        android:layout_marginTop="150dp"
+
+       android:layout_gravity="center"
+
+        android:text="paid"
+        android:textSize="18dp" />
+
+    <Button
+        android:id="@+id/unpaid_b"
+        android:layout_width="350dp"
+        android:layout_height="70dp"
+      android:layout_marginTop="60dp"
+        android:backgroundTint="#2929CA"
+        android:layout_gravity="center"
+        android:text="Unpaid"
+        android:textSize="18dp"
+        />
+
+</LinearLayout>

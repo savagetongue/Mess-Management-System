@@ -1,0 +1,30 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Set The Menu -->
+    <group>
+
+
+        <!-- View Complaints -->
+        <item
+            android:id="@+id/Raise_Complaints"
+            android:title="Raise Complaint"
+            android:icon="@drawable/complaint"
+            app:showAsAction="always" />
+
+        <!-- View Suggestions -->
+        <item
+            android:id="@+id/Give_Suggestions"
+            android:title="Give Suggestions"
+            android:icon="@drawable/complaint"
+            app:showAsAction="always" />
+    </group>
+
+    <item
+        android:id="@+id/logout"
+        android:title="Logout"
+        android:icon="@drawable/logout"/>
+
+
+</menu>

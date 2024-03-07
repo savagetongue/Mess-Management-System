@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "801959579433",
+    "firebase_url": "https://mess-management-system-82924-default-rtdb.firebaseio.com",
+    "project_id": "mess-management-system-82924",
+    "storage_bucket": "mess-management-system-82924.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:801959579433:android:2c8ae04c42a63ab8b0b138",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxQOMS4-4OqmR2_KDSKiH-9h1dkowMyrg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,57 @@
+<!-- custom_menu_item.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/breakfastIcon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:contentDescription="Breakfast Icon"
+        android:src="@drawable/breakfast" />
+
+    <TextView
+        android:id="@+id/breakfastItemName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Breakfast"
+        android:textSize="16sp"
+        android:layout_marginStart="8dp" />
+
+    <ImageView
+        android:id="@+id/lunchIcon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:contentDescription="Lunch Icon"
+        android:src="@drawable/lunch"
+        android:layout_marginStart="16dp" />
+
+    <TextView
+        android:id="@+id/lunchItemName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lunch"
+        android:textSize="16sp"
+        android:layout_marginStart="8dp" />
+
+    <ImageView
+        android:id="@+id/dinnerIcon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:contentDescription="Dinner Icon"
+        android:src="@drawable/dinner"
+        android:layout_marginStart="16dp" />
+
+    <TextView
+        android:id="@+id/dinnerItemName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dinner"
+        android:textSize="16sp"
+        android:layout_marginStart="8dp" />
+</LinearLayout>
