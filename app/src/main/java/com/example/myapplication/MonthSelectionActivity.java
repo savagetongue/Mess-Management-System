@@ -173,7 +173,7 @@ public class MonthSelectionActivity extends AppCompatActivity {
 
                                 Map<String, Object> studentInfo = new HashMap<>();
                                 studentInfo.put("studentId", studentId);
-                                studentInfo.put("unpaidAmount", 2000.0);
+                                studentInfo.put("unpaidAmount", 2200.0);
 
                                 studentsCollection.document(studentId)
                                         .set(studentInfo)

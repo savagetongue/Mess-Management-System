@@ -12,11 +12,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.DateFormatSymbols;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -108,36 +108,50 @@ public class AddCustomer extends AppCompatActivity {
     }
 
     private void createBillsCollection(String studentId) {
+        // Reference to the "bills" collection
+        CollectionReference billsCollection = db.collection("bills");
+
         // Get the current month and year
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, 2024); // Starting from February 2024
         int currentMonth = calendar.get(Calendar.MONTH);
 
-        // Create a document for the current month under "bills" collection
-        String monthName = new DateFormatSymbols().getShortMonths()[currentMonth % 12];
-        String monthYear = monthName + "_" + calendar.get(Calendar.YEAR);
+        // Fetch the existing months from the "bills" collection
+        billsCollection
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (DocumentSnapshot monthDocument : task.getResult()) {
+                            String existingMonth = monthDocument.getId();
 
-        // Reference to the "bills" collection
-        CollectionReference billsCollection = db.collection("bills");
+                            // Calculate the month and year for the existing month
+                            int existingMonthIndex = Arrays.asList(new DateFormatSymbols().getShortMonths()).indexOf(existingMonth.substring(0, 3));
+                            int existingYear = Integer.parseInt(existingMonth.substring(existingMonth.indexOf("_") + 1));
 
-        // Reference to the specific month's document
-        DocumentReference monthDocument = billsCollection.document(monthYear);
+                            // Check if the existing month is in the future (including the current month)
+                            if ((existingYear > calendar.get(Calendar.YEAR)) ||
+                                    (existingYear == calendar.get(Calendar.YEAR) && existingMonthIndex >= currentMonth)) {
+                                // Reference to the subcollection for students within the existing month document
+                                CollectionReference existingMonthStudentsCollection = monthDocument.getReference().collection("students");
 
-        // Reference to the subcollection for students within the month document
-        CollectionReference studentsCollection = monthDocument.collection("students");
+                                // Add information about the bills for the specific student in the existing month
+                                Map<String, Object> existingMonthStudentInfo = new HashMap<>();
+                                existingMonthStudentInfo.put("studentId", studentId);
+                                existingMonthStudentInfo.put("unpaidAmount", 2200.0); // Adjust the unpaidAmount value as needed
 
-        // Add information about the bills for the specific student
-        Map<String, Object> studentInfo = new HashMap<>();
-        studentInfo.put("studentId", studentId);
-        studentInfo.put("unpaidAmount", 2000.0);
-
-        // Add the student information to the subcollection
-        studentsCollection.document(studentId)
-                .set(studentInfo)
-                .addOnSuccessListener(aVoid ->
-                        Log.d("Firestore", "Document created for " + studentId + " in " + monthYear))
-                .addOnFailureListener(e ->
-                        Log.e("Firestore", "Error creating document", e));
+                                // Add the student information to the subcollection for the existing month
+                                existingMonthStudentsCollection.document(studentId)
+                                        .set(existingMonthStudentInfo)
+                                        .addOnSuccessListener(aVoid ->
+                                                Log.d("Firestore", "Document created for " + studentId + " in " + existingMonth))
+                                        .addOnFailureListener(e ->
+                                                Log.e("Firestore", "Error creating document", e));
+                            }
+                        }
+                    }
+                });
     }
+
+
 
 }
