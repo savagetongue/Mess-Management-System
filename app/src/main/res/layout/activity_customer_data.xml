@@ -1,82 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/t4"
+    android:orientation="vertical"
     tools:context=".customer_data"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="-82dp">
 
-
-    <Button
-        android:id="@+id/update"
-        android:layout_width="150dp"
-        android:layout_height="65dp"
-        android:layout_marginBottom="46dp"
-        android:layout_x="150dp"
-        android:layout_y="557dp"
-        android:backgroundTint="#2929CA"
-        android:text="Update"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.128"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        app:layout_constraintVertical_bias="0.589" />
-
-
     <ImageView
         android:id="@+id/imageViewLogo"
-        android:layout_width="328dp"
+        android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_centerHorizontal="true"
-        android:layout_x="37dp"
-        android:layout_y="4dp"
+        android:layout_gravity="center"
         android:background="@drawable/back"
-        android:padding="20dp"
-        android:src="@drawable/stud_data"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="16dp" />
+        android:padding="25dp"
+        android:src="@drawable/stud_data" />
 
-    <TextView
-        android:id="@+id/textView15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="73dp"
-        android:layout_marginBottom="44dp"
-
-        android:textColor="@color/reddish_orange"
-        android:textSize="36dp"
-        android:textStyle="bold"
-
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+    <!-- Horizontal LinearLayout for side-by-side layout -->
     <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="373dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="168dp"
-        android:background="@drawable/t4"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView15">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
+        <!-- Left LinearLayout -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:layout_marginTop="125dp"
             android:orientation="vertical">
 
             <TextView
@@ -84,7 +38,7 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="40dp"
                 android:text="ID :"
                 android:textColor="@color/black"
                 android:textSize="30dp"
@@ -94,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="40dp"
                 android:text="Name :"
                 android:textColor="@color/black"
                 android:textSize="30dp"
@@ -104,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="4dp"
                 android:text="Mobile :"
                 android:textColor="@color/black"
                 android:textSize="30dp"
@@ -114,26 +68,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="40dp"
                 android:text="College :"
                 android:textColor="@color/black"
                 android:textSize="30dp"
                 android:textStyle="bold" />
         </LinearLayout>
 
+        <!-- Right LinearLayout -->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="125dp"
             android:orientation="vertical">
 
             <EditText
                 android:id="@+id/c_id"
-                android:layout_width="match_parent"
+                android:layout_width="245dp"
                 android:layout_height="50dp"
-                android:layout_gravity="right"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="40dp"
+
                 android:editable="false"
-                android:gravity=""
                 android:hint="id"
                 android:textSize="20dp" />
 
@@ -143,7 +101,7 @@
                 android:layout_height="50dp"
                 android:layout_gravity="right"
                 android:layout_marginRight="5dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="40dp"
                 android:hint="Name"
                 android:textSize="20dp" />
 
@@ -165,30 +123,31 @@
                 android:layout_marginRight="2dp"
                 android:hint="College Name"
                 android:textSize="20dp" />
-
-
         </LinearLayout>
-
-
     </LinearLayout>
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+    <Button
+        android:id="@+id/update"
+        android:layout_width="150dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginLeft="40dp"
+        android:backgroundTint="#2929CA"
+        android:text="Update"
+        android:textColor="@color/white" />
 
     <Button
         android:id="@+id/delete"
         android:layout_width="150dp"
         android:layout_height="65dp"
-        android:layout_marginBottom="46dp"
-        android:layout_x="150dp"
-        android:layout_y="557dp"
+       android:layout_marginTop="70dp"
         android:backgroundTint="#2929CA"
+        android:layout_marginLeft="40dp"
         android:text="Delete"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.79"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        app:layout_constraintVertical_bias="0.589" />
+        android:textColor="@color/white" />
+</LinearLayout>
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
