@@ -28,6 +28,7 @@
         android:textSize="15dp"
         android:backgroundTint="#2929CA"
         android:layout_marginLeft="60dp"
+        android:layout_gravity="center_vertical"
         app:layout_constraintTop_toTopOf="@+id/guidelineButtons" />
 
     <Button
@@ -39,7 +40,7 @@
         android:layout_height="100dp"
         android:text="Mess Manager"
         android:textSize="15dp"
-
+android:layout_gravity="center_vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

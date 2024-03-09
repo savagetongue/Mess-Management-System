@@ -8,10 +8,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,10 +33,9 @@ public class Give_suggestion extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String suggestionText = editTextSuggestion.getText().toString();
-                String currentDate = DateFormat.getDateTimeInstance().format(new Date());
 
                 // Create a new suggestion document in Firestore
-                addSuggestionToFirestore(suggestionText, currentDate);
+                addSuggestionToFirestore(suggestionText);
 
                 // Display a toast message (optional)
                 Toast.makeText(Give_suggestion.this, "Suggestion submitted!", Toast.LENGTH_SHORT).show();
@@ -48,7 +46,10 @@ public class Give_suggestion extends AppCompatActivity {
         });
     }
 
-    private void addSuggestionToFirestore(String suggestionText, String currentDate) {
+    private void addSuggestionToFirestore(String suggestionText) {
+        // Get current timestamp as Firestore Timestamp
+        Timestamp currentDate = Timestamp.now();
+
         Map<String, Object> suggestionData = new HashMap<>();
         suggestionData.put("text", suggestionText);
         suggestionData.put("date", currentDate);

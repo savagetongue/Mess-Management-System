@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -23,8 +24,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,15 +64,14 @@ public class Raise_complaint extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String complaintText = editTextComplaint.getText().toString();
-                String currentDate = DateFormat.getDateTimeInstance().format(new Date());
 
                 // Check if selectedImageBitmap is not null
                 if (selectedImageBitmap != null) {
                     // Upload the image to Firestore Storage and get the download URL
-                    uploadImageToFirestoreStorage(complaintText, currentDate);
+                    uploadImageToFirestoreStorage(complaintText);
                 } else {
                     // Save the complaint details to Firestore without an image
-                    saveComplaintToFirestore(complaintText, currentDate, null);
+                    saveComplaintToFirestore(complaintText, null);
                 }
 
                 // Display a toast message (optional)
@@ -86,7 +84,7 @@ public class Raise_complaint extends AppCompatActivity {
         });
     }
 
-    private void uploadImageToFirestoreStorage(final String complaintText, final String currentDate) {
+    private void uploadImageToFirestoreStorage(final String complaintText) {
         // Convert the image to bytes
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         selectedImageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -109,7 +107,7 @@ public class Raise_complaint extends AppCompatActivity {
                             public void onSuccess(android.net.Uri uri) {
                                 String imageUrl = uri.toString();
                                 // Save the complaint details to Firestore with the image URL
-                                saveComplaintToFirestore(complaintText, currentDate, imageUrl);
+                                saveComplaintToFirestore(complaintText, imageUrl);
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -126,11 +124,14 @@ public class Raise_complaint extends AppCompatActivity {
                     }
                 });
     }
+    private void saveComplaintToFirestore(String complaintText, String imageUrl) {
+        // Get current timestamp as Firestore Timestamp
+        Timestamp currentDate = Timestamp.now();
 
-    private void saveComplaintToFirestore(String complaintText, String currentDate, String imageUrl) {
         Map<String, Object> complaintData = new HashMap<>();
         complaintData.put("complaintText", complaintText);
         complaintData.put("date", currentDate);
+
         if (imageUrl != null) {
             complaintData.put("imageUrl", imageUrl);
         }
@@ -153,6 +154,7 @@ public class Raise_complaint extends AppCompatActivity {
                     }
                 });
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
