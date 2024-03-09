@@ -96,9 +96,9 @@
 
     <EditText
         android:id="@+id/c_id"
-        android:layout_width="195dp"
+        android:layout_width="170dp"
         android:layout_height="51dp"
-        android:layout_marginEnd="21dp"
+        android:layout_marginEnd="35dp"
         android:layout_marginBottom="39dp"
         android:background="@drawable/border_background"
         android:editable="false"
@@ -112,10 +112,10 @@
 
     <EditText
         android:id="@+id/c_name"
-        android:layout_width="195dp"
+        android:layout_width="170dp"
         android:layout_height="51dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="21dp"
+        android:layout_marginEnd="35dp"
         android:layout_marginBottom="30dp"
         android:paddingRight="20dp"
         android:background="@drawable/border_background"
@@ -130,9 +130,9 @@
 
     <EditText
         android:id="@+id/c_unpaid_et"
-        android:layout_width="195dp"
+        android:layout_width="170dp"
         android:layout_height="51dp"
-        android:layout_marginEnd="21dp"
+        android:layout_marginEnd="35dp"
         android:layout_marginBottom="155dp"
         android:paddingRight="20dp"
         android:background="@drawable/border_background"
@@ -147,11 +147,11 @@
 
     <Button
         android:id="@+id/update"
-        android:layout_width="170dp"
+        android:layout_width="160dp"
         android:layout_height="60dp"
-        android:layout_marginStart="80dp"
+        android:layout_marginStart="100dp"
         android:layout_marginLeft="70dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginEnd="30dp"
         android:layout_marginRight="30dp"
 
         android:backgroundTint="#2929CA"
@@ -163,9 +163,9 @@
 
     <Button
         android:id="@+id/reminder"
-        android:layout_width="170dp"
+        android:layout_width="160dp"
         android:layout_height="60dp"
-        android:layout_marginEnd="80dp"
+        android:layout_marginEnd="100dp"
         android:layout_marginRight="70dp"
         android:layout_marginBottom="91dp"
         android:backgroundTint="#2929CA"

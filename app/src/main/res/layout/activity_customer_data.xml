@@ -145,7 +145,7 @@
         android:layout_height="65dp"
        android:layout_marginTop="70dp"
         android:backgroundTint="#2929CA"
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="20dp"
         android:text="Delete"
         android:textColor="@color/white" />
 </LinearLayout>
