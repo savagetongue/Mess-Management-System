@@ -134,18 +134,20 @@
         android:layout_width="150dp"
         android:layout_height="65dp"
         android:layout_marginTop="70dp"
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="30dp"
+
         android:backgroundTint="#2929CA"
         android:text="Update"
         android:textColor="@color/white" />
 
-    <Button
+    <Button  android:layout_marginLeft="30dp"
         android:id="@+id/delete"
         android:layout_width="150dp"
         android:layout_height="65dp"
        android:layout_marginTop="70dp"
         android:backgroundTint="#2929CA"
-        android:layout_marginLeft="20dp"
+
+
         android:text="Delete"
         android:textColor="@color/white" />
 </LinearLayout>
