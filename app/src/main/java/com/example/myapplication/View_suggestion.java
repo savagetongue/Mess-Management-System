@@ -80,7 +80,7 @@ public class View_suggestion extends AppCompatActivity {
                     }
                 });
     }
-// ...
+
 
     private void displaySuggestions(List<Suggestion> suggestionList) {
         ListView listView = findViewById(R.id.listViewSuggestions);
