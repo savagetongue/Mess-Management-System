@@ -53,8 +53,7 @@ public class expense_book extends AppCompatActivity {
         Intent i = getIntent();
         list = i.getStringArrayListExtra("list");
 
-        ArrayAdapter adapter = new ArrayAdapter(this, com.karumi.dexter.R.layout.support_simple_spinner_dropdown_item, list);
-
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
         notes_list.setAdapter(adapter);
 
         notes_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -62,6 +61,8 @@ public class expense_book extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String date = notes_list.getItemAtPosition(i).toString();
                 Intent intent = new Intent(expense_book.this, view_note.class);
+
+
                 Cursor cursor = db.get_notes(date);
 
                 int idIndex = cursor.getColumnIndex("id");
@@ -77,7 +78,7 @@ public class expense_book extends AppCompatActivity {
                 intent.putExtra("id", "" + id1);
                 intent.putExtra("date", date1);
                 intent.putExtra("notes", notes1);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -122,16 +123,11 @@ public class expense_book extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                ArrayList<Task> updatedTaskList = data.getParcelableArrayListExtra("updatedTaskList");
-                updateTaskList(updatedTaskList);
+                // Handle the updated note from view_note activity
+                String updatedNote = data.getStringExtra("updatedNote");
+                // Update your list or perform any necessary actions
             }
         }
-    }
-
-    private void updateTaskList(ArrayList<Task> updatedTaskList) {
-        taskList.clear();
-        taskList.addAll(updatedTaskList);
-        taskAdapter.notifyDataSetChanged();
     }
 
     private ArrayList<Task> loadTaskList() {
@@ -139,10 +135,10 @@ public class expense_book extends AppCompatActivity {
         Gson gson = new Gson();
         String json = sharedPreferences.getString("task_list", "");
 
-        Type type = new TypeToken<ArrayList<Task>>() {}.getType();
+        Type type = new TypeToken<ArrayList<Task>>() {
+        }.getType();
 
         // Handle the case where the loaded task list is null
         return gson.fromJson(json, type) != null ? gson.fromJson(json, type) : new ArrayList<>();
     }
-
 }
