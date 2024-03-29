@@ -1,25 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".activity_view_list"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@drawable/t4"
-    android:orientation="vertical">
+    tools:context=".activity_view_list">
 
-
-
+    <EditText
+        android:id="@+id/searchEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search by name"
+        android:padding="8dp"
+        android:textColorHint="#666666"
+        android:background="@drawable/border_background"
+        android:layout_margin="8dp"
+        android:textSize="16sp"
+        android:drawableLeft="@android:drawable/ic_menu_search"
+        android:drawablePadding="8dp"/>
 
     <ListView
         android:id="@+id/Customer_list"
-        android:divider="@color/black"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:dividerHeight="1dp"
-        />
-
-
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@color/black"
+        android:dividerHeight="1dp"/>
 
 </LinearLayout>

@@ -24,4 +24,10 @@ public class PaidStudent {
     public void setImg(int img) {
         this.img = img;
     }
+
+
+
+
+
+
 }

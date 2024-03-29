@@ -1,21 +1,33 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
 import android.widget.ListView;
-import java.text.DateFormatSymbols;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 
 public class bills_paid extends AppCompatActivity {
-    ListView paid_list;
-    FirebaseFirestore db;
+    private ListView paidListView;
+    private EditText searchEditText;
+    private FirebaseFirestore db;
+    private static final int REQUEST_CODE_UPDATE_DELETE = 1;
 
-
+    private ArrayList<PaidStudent> paidStudentList;
+    private PaidItemAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,62 +36,90 @@ public class bills_paid extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
-        // Assuming you have a button or some trigger to fetch data
-        fetchData();
+        paidListView = findViewById(R.id.paid_list);
+        searchEditText = findViewById(R.id.searchEditText);
+
+        paidStudentList = new ArrayList<>();
+        adapter = new PaidItemAdapter(this, paidStudentList);
+        paidListView.setAdapter(adapter);
+
+        fetchDataFromFirestore();
+
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filterStudents(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
     }
 
-    private void fetchData() {
+    private void fetchDataFromFirestore() {
         String selectedMonth = getIntent().getStringExtra("selectedMonth");
         String formattedMonth = formatMonth(selectedMonth); // Convert to MAR_2024 format
         String studentsPath = "bills/" + formattedMonth + "/students";
 
         db.collection(studentsPath)
                 .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    ArrayList<PaidStudent> paidStudentList = new ArrayList<>();
-                    for (DocumentSnapshot document : queryDocumentSnapshots) {
-                        String studentId = document.getString("studentId");
-                        Double unpaidAmount = document.getDouble("unpaidAmount");
-
-                        // Assuming unpaidAmount being 0 indicates the bill is paid
-                        if (unpaidAmount != null && unpaidAmount == 0.0) {
-                            // Now, let's fetch the student's name using the studentId
-                            fetchStudentName(studentId, paidStudentList);
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String studentId = document.getString("studentId");
+                                Double unpaidAmount = document.getDouble("unpaidAmount");
+                                if (unpaidAmount != null && unpaidAmount == 0.0) {
+                                    fetchStudentName(studentId);
+                                }
+                            }
+                        } else {
+                            Toast.makeText(bills_paid.this, "Error fetching students: " + task.getException(), Toast.LENGTH_SHORT).show();
                         }
                     }
-                })
-                .addOnFailureListener(e -> {
-                    // Handle errors
-                    e.printStackTrace(); // Log the error
                 });
     }
 
-    private void fetchStudentName(String studentId, ArrayList<PaidStudent> paidStudentList) {
+    private void fetchStudentName(String studentId) {
         db.collection("students")
                 .document(studentId)
                 .get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
-                        String studentName = documentSnapshot.getString("name");
-                        paidStudentList.add(new PaidStudent(studentName));
-
-                        // Update the ListView
-                        displayData(paidStudentList);
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                String studentName = document.getString("name");
+                                paidStudentList.add(new PaidStudent(studentName));
+                                adapter.notifyDataSetChanged();
+                            }
+                        } else {
+                            Toast.makeText(bills_paid.this, "Error fetching student name: " + task.getException(), Toast.LENGTH_SHORT).show();
+                        }
                     }
-                })
-                .addOnFailureListener(e -> {
-                    // Handle errors
-                    e.printStackTrace(); // Log the error
                 });
     }
 
-    private void displayData(ArrayList<PaidStudent> paidStudentList) {
-        // Update your ListView or any other UI component with the fetched data
-        PaidItemAdapter adapter = new PaidItemAdapter(this, paidStudentList);
-
-
-        paid_list = findViewById(R.id.paid_list);
-        paid_list.setAdapter(adapter);
+    private void filterStudents(String query) {
+        if (query.isEmpty()) {
+            paidStudentList.clear();
+            fetchDataFromFirestore(); // Reload the entire list of students
+        } else {
+            ArrayList<PaidStudent> filteredList = new ArrayList<>();
+            for (PaidStudent student : paidStudentList) {
+                if (student.getStudentName().toLowerCase().contains(query.toLowerCase())) {
+                    filteredList.add(student);
+                }
+            }
+            adapter.clear();
+            adapter.addAll(filteredList);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     private String formatMonth(String selectedMonth) {

@@ -5,8 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".bills_paid"
-    android:background="@drawable/t4">
+    android:background="@drawable/t4"
+    android:orientation="vertical">
 
+    <EditText
+        android:id="@+id/searchEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search by name"
+        android:padding="8dp"
+        android:textColorHint="#666666"
+        android:background="@drawable/border_background"
+        android:layout_margin="8dp"
+        android:textSize="16sp"
+        android:drawableLeft="@android:drawable/ic_menu_search"
+        android:drawablePadding="8dp"/>
     <ListView
         android:id="@+id/paid_list"
         android:layout_width="match_parent"

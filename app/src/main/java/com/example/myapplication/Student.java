@@ -9,6 +9,10 @@ public class Student {
     public Student() {
         // Default constructor required for Firestore
     }
+    public Student(String name)
+    {
+        this.name=name;
+    }
 
     public Student(String id, String name, String cName, String mob) {
         this.id = id;
