@@ -1,7 +1,6 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -11,23 +10,16 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.text.DateFormatSymbols;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.google.firebase.firestore.Query;
 
 public class AddCustomer extends AppCompatActivity {
 
     private EditText name, mob;
     private Spinner c_name;
     private Button submit;
-    private FirebaseFirestore db; // Firestore instance
+    private FirebaseFirestore db;
     private int studentCounter = 0;
 
     @Override
@@ -46,23 +38,7 @@ public class AddCustomer extends AppCompatActivity {
         db = FirebaseFirestore.getInstance(); // Initialize Firestore
 
         // Fetch the latest student ID from Firestore to increment
-        db.collection("students")
-                .orderBy("id")
-                .limitToLast(1)
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    List<DocumentSnapshot> documents = queryDocumentSnapshots.getDocuments();
-                    if (!documents.isEmpty()) {
-                        // Retrieve the highest studentId and increment it
-                        DocumentSnapshot lastStudentSnapshot = documents.get(0);
-                        Student lastStudent = lastStudentSnapshot.toObject(Student.class);
-                        studentCounter = lastStudent.getStudentId() + 1;
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    // Handle errors
-                    Toast.makeText(AddCustomer.this, "Error getting student counter", Toast.LENGTH_SHORT).show();
-                });
+        fetchLatestStudentCounter();
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,82 +52,53 @@ public class AddCustomer extends AppCompatActivity {
                 } else if (mobile.length() != 10) {
                     Toast.makeText(AddCustomer.this, "Enter a 10-digit valid number", Toast.LENGTH_SHORT).show();
                 } else {
-                    addCustomerToFirestore(name_1, clg_name, mobile);
-                    Toast.makeText(AddCustomer.this, "Customer Information is Recorded...", Toast.LENGTH_SHORT).show();
-
-                    name.setText("");
-                    mob.setText("");
+                    // Create a student object
+                    Student student = new Student(String.valueOf(studentCounter), name_1, clg_name, mobile);
+                    // Add the student to Firestore
+                    addStudentToFirestore(student);
                 }
             }
         });
     }
 
-    private void addCustomerToFirestore(String name, String cName, String mobile) {
-        // Create a new student document with the incremented student ID
-        Student newStudent = new Student(String.valueOf(studentCounter), name, cName, mobile);
-
-        // Specify the document ID using the student's ID
-        String studentId = String.valueOf(studentCounter);
-
-        // Add the student to the "students" collection in Firestore with the specified document ID
+    // Fetch latest student counter from Firestore
+    private void fetchLatestStudentCounter() {
         db.collection("students")
-                .document(studentId)
-                .set(newStudent)
-                .addOnSuccessListener(aVoid -> {
-                    // Document added successfully
-                    createBillsCollection(studentId);
+                .orderBy("id", Query.Direction.DESCENDING) // Order by student ID in descending order
+                .limit(1)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        // Retrieve the highest studentId and increment it
+                        DocumentSnapshot lastStudentSnapshot = queryDocumentSnapshots.getDocuments().get(0);
+                        Student lastStudent = lastStudentSnapshot.toObject(Student.class);
+                        studentCounter = Integer.parseInt(lastStudent.getId()) + 1;
+                    }
                 })
                 .addOnFailureListener(e -> {
-                    // Handle errors
-                    Toast.makeText(AddCustomer.this, "Error adding customer", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddCustomer.this, "Error getting student counter", Toast.LENGTH_SHORT).show();
                 });
     }
 
-    private void createBillsCollection(String studentId) {
-        // Reference to the "bills" collection
-        CollectionReference billsCollection = db.collection("bills");
-
-        // Get the current month and year
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, 2024); // Starting from February 2024
-        int currentMonth = calendar.get(Calendar.MONTH);
-
-        // Fetch the existing months from the "bills" collection
-        billsCollection
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (DocumentSnapshot monthDocument : task.getResult()) {
-                            String existingMonth = monthDocument.getId();
-
-                            // Calculate the month and year for the existing month
-                            int existingMonthIndex = Arrays.asList(new DateFormatSymbols().getShortMonths()).indexOf(existingMonth.substring(0, 3));
-                            int existingYear = Integer.parseInt(existingMonth.substring(existingMonth.indexOf("_") + 1));
-
-                            // Check if the existing month is in the future (including the current month)
-                            if ((existingYear > calendar.get(Calendar.YEAR)) ||
-                                    (existingYear == calendar.get(Calendar.YEAR) && existingMonthIndex >= currentMonth)) {
-                                // Reference to the subcollection for students within the existing month document
-                                CollectionReference existingMonthStudentsCollection = monthDocument.getReference().collection("students");
-
-                                // Add information about the bills for the specific student in the existing month
-                                Map<String, Object> existingMonthStudentInfo = new HashMap<>();
-                                existingMonthStudentInfo.put("studentId", studentId);
-                                existingMonthStudentInfo.put("unpaidAmount", 2200.0); // Adjust the unpaidAmount value as needed
-
-                                // Add the student information to the subcollection for the existing month
-                                existingMonthStudentsCollection.document(studentId)
-                                        .set(existingMonthStudentInfo)
-                                        .addOnSuccessListener(aVoid ->
-                                                Log.d("Firestore", "Document created for " + studentId + " in " + existingMonth))
-                                        .addOnFailureListener(e ->
-                                                Log.e("Firestore", "Error creating document", e));
-                            }
-                        }
-                    }
+    private void addStudentToFirestore(Student student) {
+        // Add the student to Firestore
+        db.collection("students")
+                .document(String.valueOf(studentCounter))
+                .set(student)
+                .addOnSuccessListener(aVoid -> {
+                    // Increment student counter
+                    studentCounter++;
+                    // Notify user about successful addition
+                    Toast.makeText(AddCustomer.this, "Student added successfully", Toast.LENGTH_SHORT).show();
+                    // Clear input fields
+                    name.setText("");
+                    mob.setText("");
+                    // Focus on name field
+                    name.requestFocus();
+                })
+                .addOnFailureListener(e -> {
+                    // Notify user about failure
+                    Toast.makeText(AddCustomer.this, "Failed to add student", Toast.LENGTH_SHORT).show();
                 });
     }
-
-
-
 }
