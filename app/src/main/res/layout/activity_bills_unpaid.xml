@@ -25,16 +25,18 @@
     <ListView
         android:id="@+id/unpaid_list"
         android:layout_width="match_parent"
-        android:layout_height="650dp"
+        android:layout_height="600dp"
         android:divider="@color/black"
         android:dividerHeight="1dp"
         />
     <Button
+        android:id="@+id/remindAllButton"
         android:layout_width="175dp"
         android:layout_height="65dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_gravity="center"
         android:textStyle="bold"
+        android:backgroundTint="#2929CA"
         android:text="REMIND ALL !"/>
 
 </LinearLayout>

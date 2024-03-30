@@ -2,8 +2,11 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -19,11 +22,13 @@ import java.util.List;
 public class bills_unpaid extends AppCompatActivity {
     ListView unpaid_list;
     EditText searchEditText;
+    Button remindAllButton;
     FirebaseFirestore db;
     String selectedMonth;
     String studentId;
     UnpaidItemAdapter adapter;
     List<UnpaidStudent> originalStudentList;
+    SmsManager smsManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +36,11 @@ public class bills_unpaid extends AppCompatActivity {
         setContentView(R.layout.activity_bills_unpaid);
 
         db = FirebaseFirestore.getInstance();
+        smsManager = SmsManager.getDefault();
 
         unpaid_list = findViewById(R.id.unpaid_list);
         searchEditText = findViewById(R.id.searchEditText);
+        remindAllButton = findViewById(R.id.remindAllButton);
 
         originalStudentList = new ArrayList<>();
         adapter = new UnpaidItemAdapter(this, originalStudentList);
@@ -57,6 +64,13 @@ public class bills_unpaid extends AppCompatActivity {
         unpaid_list.setOnItemClickListener((parent, view, position, id) -> {
             String selectedStudentName = originalStudentList.get(position).getStudentName();
             fetchStudentId(selectedStudentName);
+        });
+
+        remindAllButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendReminderMessagesToAll();
+            }
         });
     }
 
@@ -141,8 +155,6 @@ public class bills_unpaid extends AppCompatActivity {
         }
     }
 
-
-
     private void navigateToUnpaidAmount(String studentId, String selectedMonth) {
         Intent intent = new Intent(this, unpaid_amount.class);
         intent.putExtra("selectedStudentId", studentId);
@@ -150,9 +162,37 @@ public class bills_unpaid extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void sendReminderMessagesToAll() {
+        for (UnpaidStudent student : originalStudentList) {
+            fetchStudentPhoneNumber(student.getStudentName());
+        }
+    }
+
+    private void fetchStudentPhoneNumber(String studentName) {
+        db.collection("students")
+                .whereEqualTo("name", studentName)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (DocumentSnapshot document : queryDocumentSnapshots) {
+                        String phoneNumber = document.getString("mob");
+                        if (phoneNumber != null && !phoneNumber.isEmpty()) {
+                            sendReminderMessage(phoneNumber);
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    e.printStackTrace();
+                });
+    }
+
+    private void sendReminderMessage(String phoneNumber) {
+        String reminderMessage = "Dear student, your mess bill is pending. Please pay as soon as possible.";
+        smsManager.sendTextMessage(phoneNumber, null, reminderMessage, null, null);
+    }
+
     private String formatMonth(String selectedMonth) {
         if (selectedMonth == null) {
-            return "MAR_2024";
+            return "MAR_2024"; // Default month if none selected
         }
         String[] parts = selectedMonth.split("-");
         String year = parts[0];
