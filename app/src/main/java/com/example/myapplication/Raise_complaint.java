@@ -2,6 +2,9 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -24,6 +27,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -87,7 +91,7 @@ public class Raise_complaint extends AppCompatActivity {
     private void uploadImageToFirestoreStorage(final String complaintText) {
         // Convert the image to bytes
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        selectedImageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        selectedImageBitmap.compress(Bitmap.CompressFormat.JPEG, 80, baos); // Adjust compression quality here
         byte[] imageData = baos.toByteArray();
 
         // Create a unique filename for the image
@@ -102,9 +106,9 @@ public class Raise_complaint extends AppCompatActivity {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         // Image uploaded successfully, get the download URL
-                        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<android.net.Uri>() {
+                        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
-                            public void onSuccess(android.net.Uri uri) {
+                            public void onSuccess(Uri uri) {
                                 String imageUrl = uri.toString();
                                 // Save the complaint details to Firestore with the image URL
                                 saveComplaintToFirestore(complaintText, imageUrl);
@@ -124,6 +128,7 @@ public class Raise_complaint extends AppCompatActivity {
                     }
                 });
     }
+
     private void saveComplaintToFirestore(String complaintText, String imageUrl) {
         // Get current timestamp as Firestore Timestamp
         Timestamp currentDate = Timestamp.now();
@@ -155,19 +160,47 @@ public class Raise_complaint extends AppCompatActivity {
                 });
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE_IMAGE && resultCode == RESULT_OK && data != null) {
             try {
-                selectedImageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
-                imageViewAttached.setImageBitmap(selectedImageBitmap);
+                // Get the selected image URI
+                Uri selectedImageUri = data.getData();
+
+                // Load the selected image into the ImageView
+                imageViewAttached.setImageURI(selectedImageUri);
                 imageViewAttached.setVisibility(View.VISIBLE);
-            } catch (Exception e) {
+
+                // Convert the selected image URI to Bitmap
+                selectedImageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+
+    private Bitmap rotateImageIfRequired(Bitmap bitmap, Uri selectedImageUri) throws IOException {
+        ExifInterface ei = new ExifInterface(selectedImageUri.getPath());
+        int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                return rotateImage(bitmap, 90);
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                return rotateImage(bitmap, 180);
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                return rotateImage(bitmap, 270);
+            default:
+                return bitmap;
+        }
+    }
+
+    private Bitmap rotateImage(Bitmap bitmap, float degrees) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degrees);
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 }

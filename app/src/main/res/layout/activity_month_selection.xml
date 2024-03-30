@@ -33,9 +33,17 @@
         android:layout_width="65dp"
         android:layout_height="65dp"
 
-
        android:layout_marginLeft="280dp"
         android:background="@drawable/calendar"
         android:foreground="@drawable/calendar" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ADD MONTH"
+        android:layout_marginLeft="262dp"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:layout_marginTop="5dp"
+        android:textColor="#101C45"/>
 
 </LinearLayout>

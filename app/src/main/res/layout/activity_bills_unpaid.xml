@@ -21,12 +21,20 @@
         android:drawableLeft="@android:drawable/ic_menu_search"
         android:drawablePadding="8dp"/>
 
+
     <ListView
         android:id="@+id/unpaid_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="650dp"
         android:divider="@color/black"
         android:dividerHeight="1dp"
         />
+    <Button
+        android:layout_width="175dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:text="REMIND ALL !"/>
 
 </LinearLayout>

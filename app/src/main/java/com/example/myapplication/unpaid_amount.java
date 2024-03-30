@@ -40,7 +40,7 @@ public class unpaid_amount extends AppCompatActivity {
         String selectedMonth = i.getStringExtra("selectedMonth");
 
         // Display the received studentId to check if it's correct
-        Toast.makeText(this, "Received studentId: " + studentId, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Received studentId: " + studentId, Toast.LENGTH_SHORT).show();
 
         // Query Firestore to get the document reference based on student's ID from "students" collection
         DocumentReference studentRef = db.collection("students").document(studentId);

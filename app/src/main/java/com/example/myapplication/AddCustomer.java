@@ -56,12 +56,12 @@ public class AddCustomer extends AppCompatActivity {
                 String mobile = mob.getText().toString();
 
                 if (name_1.isEmpty() || clg_name.isEmpty() || mobile.isEmpty()) {
-                    Toast.makeText(AddCustomer.this, "All fields are Required...!!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddCustomer.this, "All Fields Are Required...!!!", Toast.LENGTH_SHORT).show();
                 } else if (mobile.length() != 10) {
-                    Toast.makeText(AddCustomer.this, "Enter a 10-digit valid number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddCustomer.this, "Enter A 10-digit Valid Number", Toast.LENGTH_SHORT).show();
                 } else {
                     addCustomerToFirestore(name_1, clg_name, mobile);
-                    Toast.makeText(AddCustomer.this, "Customer Information is Recorded...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddCustomer.this, "Student Information is Recorded...", Toast.LENGTH_SHORT).show();
 
                     // Clear input fields after successful addition
                     name.setText("");
@@ -111,7 +111,7 @@ public class AddCustomer extends AppCompatActivity {
                     createBillsCollection(studentId);
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(AddCustomer.this, "Error adding customer", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddCustomer.this, "Error Adding Student", Toast.LENGTH_SHORT).show();
                 });
     }
 

@@ -54,7 +54,7 @@ public class TaskActivity extends AppCompatActivity {
         String taskTitle = taskTitleEditText.getText().toString().trim();
         String taskDescription = taskDescriptionEditText.getText().toString().trim();
 
-        if (!taskTitle.isEmpty() && !taskDescription.isEmpty()) {
+        if (!taskTitle.isEmpty()) {
             // Save the task details to your list
             Task newTask = new Task(taskTitle, taskDescription, false);
 
@@ -69,13 +69,13 @@ public class TaskActivity extends AppCompatActivity {
             saveTaskList(taskList);
 
             // Display a Toast message
-            Toast.makeText(this, "Task Saved:\n" + newTask.toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Task Saved", Toast.LENGTH_SHORT).show();
 
             // Clear input fields
             taskTitleEditText.getText().clear();
             taskDescriptionEditText.getText().clear();
         } else {
-            Toast.makeText(this, "Please enter both title and description for the task", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please Enter Title", Toast.LENGTH_SHORT).show();
         }
     }
     private void saveTaskList(ArrayList<Task> taskList) {

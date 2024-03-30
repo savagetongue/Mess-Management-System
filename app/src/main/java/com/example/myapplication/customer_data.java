@@ -90,10 +90,10 @@ public class customer_data extends AppCompatActivity {
                         .update("name", nameValue, "mob", mobValue, "cname", cNameValue)
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
-                                Toast.makeText(customer_data.this, "Student information updated", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(customer_data.this, "Student Information Updated", Toast.LENGTH_SHORT).show();
                                 setResult(RESULT_OK);
                             } else {
-                                Toast.makeText(customer_data.this, "Error updating user information", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(customer_data.this, "Error Updating Student Information", Toast.LENGTH_SHORT).show();
                             }
                             finish();
                         });
@@ -123,7 +123,7 @@ public class customer_data extends AppCompatActivity {
         db.document(studentsPath)
                 .delete()
                 .addOnSuccessListener(aVoid -> {
-                    //Toast.makeText(customer_data.this, "Student deleted from students collection", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(customer_data.this, "Student Deleted ! ", Toast.LENGTH_SHORT).show();
                     setResult(RESULT_OK);
                     finish();
                 })
