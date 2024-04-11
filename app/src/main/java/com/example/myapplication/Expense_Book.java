@@ -22,7 +22,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class expense_book extends AppCompatActivity {
+public class Expense_Book extends AppCompatActivity {
 
     DBManager db;
     ArrayList<String> list;
@@ -37,7 +37,7 @@ public class expense_book extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_expense_book);
+        setContentView(R.layout.expense_book);
 
         db = new DBManager(this);
         notes_list = findViewById(R.id.notes_list);
@@ -50,8 +50,10 @@ public class expense_book extends AppCompatActivity {
         taskRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         taskRecyclerView.setAdapter(taskAdapter);
 
+        //From Manager_Home_Screen Dates
         Intent i = getIntent();
         list = i.getStringArrayListExtra("list");
+
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
         notes_list.setAdapter(adapter);
@@ -60,9 +62,9 @@ public class expense_book extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String date = notes_list.getItemAtPosition(i).toString();
-                Intent intent = new Intent(expense_book.this, view_note.class);
+                Intent intent = new Intent(Expense_Book.this, View_Note.class);
 
-
+               // Retrieving Note From DB By Date
                 Cursor cursor = db.get_notes(date);
 
                 int idIndex = cursor.getColumnIndex("id");
@@ -99,7 +101,7 @@ public class expense_book extends AppCompatActivity {
             switch (which) {
                 case 0:
                     // Today's Expense
-                    Intent todayExpenseIntent = new Intent(getApplicationContext(), Create_note.class);
+                    Intent todayExpenseIntent = new Intent(getApplicationContext(), Create_Note.class);
                     startActivity(todayExpenseIntent);
                     break;
                 case 1:
@@ -109,8 +111,8 @@ public class expense_book extends AppCompatActivity {
             }
         });
 
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        AlertDialog dialog = builder.create(); // Creates Build
+        dialog.show(); // Displays Dialog
     }
 
     private void openTaskActivity() {
@@ -123,7 +125,7 @@ public class expense_book extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                // Handle the updated note from view_note activity
+                // Handle the updated note from View_Note activity
                 String updatedNote = data.getStringExtra("updatedNote");
                 // Update your list or perform any necessary actions
             }
@@ -131,10 +133,12 @@ public class expense_book extends AppCompatActivity {
     }
 
     private ArrayList<Task> loadTaskList() {
+        // SharedPreference Is A Way TO Store Key:Value Pairs In Android
         SharedPreferences sharedPreferences = getSharedPreferences("task_preferences", Context.MODE_PRIVATE);
-        Gson gson = new Gson();
+        //retrieves task prefernce from task preference in android in built
+        Gson gson = new Gson(); //Java Library Used To Convert Java<->JSON
         String json = sharedPreferences.getString("task_list", "");
-
+        // returns list of tasks
         Type type = new TypeToken<ArrayList<Task>>() {
         }.getType();
 

@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class customer_data extends AppCompatActivity {
+public class Customer_Data extends AppCompatActivity {
     Button delete, update;
     EditText id, name, mob, c_name;
     FirebaseFirestore db;
@@ -20,7 +20,7 @@ public class customer_data extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_customer_data);
+        setContentView(R.layout.customer_data);
 
         id = findViewById(R.id.c_id);
         name = findViewById(R.id.name);
@@ -29,9 +29,11 @@ public class customer_data extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
+        // Getting Name From View_List To Find Which Student Is Clicked
         Intent intent = getIntent();
         String selectedUserName = intent.getStringExtra("userName");
 
+        // Finding Data Of The Student With Passed Name
         db.collection("students")
                 .whereEqualTo("name", selectedUserName)
                 .get()
@@ -49,7 +51,7 @@ public class customer_data extends AppCompatActivity {
                             c_name.setText(cNameValue);
                         }
                     } else {
-                        Toast.makeText(customer_data.this, "Error fetching user details", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Customer_Data.this, "Error fetching user details", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -72,7 +74,7 @@ public class customer_data extends AppCompatActivity {
                                     deleteStudentFromMonth(userId, monthPath);
                                 }
                             } else {
-                                Toast.makeText(customer_data.this, "Error fetching months", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Customer_Data.this, "Error fetching months", Toast.LENGTH_SHORT).show();
                             }
                         });
             }
@@ -90,10 +92,10 @@ public class customer_data extends AppCompatActivity {
                         .update("name", nameValue, "mob", mobValue, "cname", cNameValue)
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
-                                Toast.makeText(customer_data.this, "Student Information Updated", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Customer_Data.this, "Student Information Updated", Toast.LENGTH_SHORT).show();
                                 setResult(RESULT_OK);
                             } else {
-                                Toast.makeText(customer_data.this, "Error Updating Student Information", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Customer_Data.this, "Error Updating Student Information", Toast.LENGTH_SHORT).show();
                             }
                             finish();
                         });
@@ -109,10 +111,10 @@ public class customer_data extends AppCompatActivity {
         db.document(billsStudentPath)
                 .delete()
                 .addOnSuccessListener(aVoid -> {
-                    //Toast.makeText(customer_data.this, "Student deleted from the month in bills", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(Customer_Data.this, "Student deleted from the month in bills", Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {
-                    //Toast.makeText(customer_data.this, "Error deleting student from the month in bills", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(Customer_Data.this, "Error deleting student from the month in bills", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 });
 
@@ -123,12 +125,12 @@ public class customer_data extends AppCompatActivity {
         db.document(studentsPath)
                 .delete()
                 .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(customer_data.this, "Student Deleted ! ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Customer_Data.this, "Student Deleted ! ", Toast.LENGTH_SHORT).show();
                     setResult(RESULT_OK);
                     finish();
                 })
                 .addOnFailureListener(e -> {
-                  //  Toast.makeText(customer_data.this, "Error deleting student from students collection", Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(Customer_Data.this, "Error deleting student from students collection", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 });
     }

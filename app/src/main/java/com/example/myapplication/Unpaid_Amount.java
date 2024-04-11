@@ -12,9 +12,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.DateFormat;
 import java.text.DateFormatSymbols;
+import java.util.Date;
 
-public class unpaid_amount extends AppCompatActivity {
+public class Unpaid_Amount extends AppCompatActivity {
     SmsManager sms;
     EditText id, name, bill;
     FirebaseFirestore db;
@@ -24,7 +26,7 @@ public class unpaid_amount extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_unpaid_amount);
+        setContentView(R.layout.unpaid_amount);
 
         db = FirebaseFirestore.getInstance();
         sms = SmsManager.getDefault();
@@ -59,7 +61,7 @@ public class unpaid_amount extends AppCompatActivity {
                 fetchUnpaidAmount(studentId, formatMonth(selectedMonth));
             } else {
                 // Handle the case when the student document is not found
-                Toast.makeText(unpaid_amount.this, "Student not found", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Unpaid_Amount.this, "Student not found", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
@@ -87,7 +89,7 @@ public class unpaid_amount extends AppCompatActivity {
                 bill.setText(String.valueOf(unpaidAmount));
             } else {
                 // Handle the case when the bills document or student document is not found
-                Toast.makeText(unpaid_amount.this, "Unpaid amount not found", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Unpaid_Amount.this, "Unpaid amount not found", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -98,10 +100,22 @@ public class unpaid_amount extends AppCompatActivity {
 
         DocumentReference billsRef = db.collection("bills").document(formattedMonth).collection("students").document(studentId);
         billsRef.update("unpaidAmount", updatedUnpaidAmount)
-                .addOnSuccessListener(aVoid ->
-                        Toast.makeText(unpaid_amount.this, "Updated", Toast.LENGTH_SHORT).show())
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(Unpaid_Amount.this, "Updated", Toast.LENGTH_SHORT).show();
+                    // If the unpaid amount is 0, store the current date in the database
+                    if (updatedUnpaidAmount == 0) {
+                        // Get the current date
+                        String currentDate = DateFormat.getDateInstance().format(new Date());
+                        // Update the date field in the database
+                        billsRef.update("paidDate", currentDate)
+                                .addOnSuccessListener(aVoid1 ->
+                                        Toast.makeText(Unpaid_Amount.this, "Paid date updated", Toast.LENGTH_SHORT).show())
+                                .addOnFailureListener(e ->
+                                        Toast.makeText(Unpaid_Amount.this, "Error updating paid date", Toast.LENGTH_SHORT).show());
+                    }
+                })
                 .addOnFailureListener(e ->
-                        Toast.makeText(unpaid_amount.this, "Error updating unpaid amount", Toast.LENGTH_SHORT).show());
+                        Toast.makeText(Unpaid_Amount.this, "Error updating unpaid amount", Toast.LENGTH_SHORT).show());
     }
 
     private String formatMonth(String selectedMonth) {
@@ -121,9 +135,9 @@ public class unpaid_amount extends AppCompatActivity {
         if (studentPhoneNumber != null && !studentPhoneNumber.isEmpty()) {
             // Send reminder message
             sms.sendTextMessage(studentPhoneNumber, null, reminderMessage, null, null);
-            Toast.makeText(unpaid_amount.this, "Reminder message sent to " + studentPhoneNumber, Toast.LENGTH_SHORT).show();
+            Toast.makeText(Unpaid_Amount.this, "Reminder message sent to " + studentPhoneNumber, Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(unpaid_amount.this, "Phone number not found for the selected student", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Unpaid_Amount.this, "Phone number not found for the selected student", Toast.LENGTH_SHORT).show();
         }
     }
 }

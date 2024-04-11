@@ -40,7 +40,7 @@ public class Custhome extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
 
-        // Retrieve menu data from Firestore and update ListView
+        // Retrieve Student_Home_Screen data from Firestore and update ListView
         loadMenuData();
 
         drawerLayout = findViewById(R.id.drawer);
@@ -69,7 +69,7 @@ public class Custhome extends AppCompatActivity {
                         return true;
 
                     case R.id.logout:
-                        Intent intent2 = new Intent(Custhome.this, Sign_1.class);
+                        Intent intent2 = new Intent(Custhome.this, Sign_In.class);
                         startActivity(intent2);
                         return true;
 
@@ -86,23 +86,23 @@ public class Custhome extends AppCompatActivity {
         db.collection("menus").document("main_menu").get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
-                        // Extract menu items
+                        // Extract Student_Home_Screen items
                         String breakfast = documentSnapshot.getString("breakfast");
                         String lunch = documentSnapshot.getString("lunch");
                         String dinner = documentSnapshot.getString("dinner");
 
-                        // Update TextViews with menu items
+                        // Update TextViews with Student_Home_Screen items
                         breakfastItem.setText(breakfast);
                         lunchItem.setText(lunch);
                         dinnerItem.setText(dinner);
                     } else {
-                        // Handle case when menu data is not available
+                        // Handle case when Student_Home_Screen data is not available
                         Toast.makeText(Custhome.this, "Menu data not found", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(e -> {
-                    // Handle failure to retrieve menu data
-                    Toast.makeText(Custhome.this, "Failed to load menu data", Toast.LENGTH_SHORT).show();
+                    // Handle failure to retrieve Student_Home_Screen data
+                    Toast.makeText(Custhome.this, "Failed to load Student_Home_Screen data", Toast.LENGTH_SHORT).show();
                 });
     }
 

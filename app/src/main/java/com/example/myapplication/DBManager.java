@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 
 public class DBManager extends SQLiteOpenHelper {
-    public static String DB_NAME="customer_data";
+    public static String DB_NAME="Customer_Data";
     public static String ID="id";
     public static String TABLENAME1 ="customer_table";
     public static String TABLENAME2 ="owner_note";
@@ -43,57 +43,34 @@ public class DBManager extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public void insert_into(String name,String c_name,String mob)
-    {
-        SQLiteDatabase db=getWritableDatabase() ;
-        ContentValues values=new ContentValues();
-        values.put("name",name);
-        values.put("c_name",c_name);
-        values.put("mob",mob);
-        values.put("bill","2000");
 
-        db.insert(TABLENAME1,null,values);
-        db.close();
-    }
     public void insert_note(String date,String text)
     {
         SQLiteDatabase db=getWritableDatabase() ;
-        ContentValues values=new ContentValues();
-        values.put(DATE,date);
-        values.put(NOTES,text);
+        ContentValues values=new ContentValues(); //  ContentValues Alloqs col-value pairs
+        values.put(DATE,date); // Insert date in Col DATE
+        values.put(NOTES,text); // Insert text In NOTES COl
 
         db.insert(TABLENAME2,null,values);
         db.close();
     }
 
-    public ArrayList<String> get_users()
-    {
-        ArrayList<String> list=new ArrayList<>();
-        SQLiteDatabase db=getReadableDatabase();
-        String col[]={"name"};
-        Cursor cursor=db.query(TABLENAME1,col,null,null,null,null,null);
-
-        int iName= cursor.getColumnIndex("name");
-
-        for(cursor.moveToFirst();!cursor.isAfterLast();cursor.moveToNext())
-        {
-            list.add(cursor.getString(iName));
-        }
-        db.close();
-        return list;
-    }
+    // Used To Get Dates
+    // Cursors Are Used TO Navigate Through The Results Of Database Query
     public ArrayList<String> get_date()
     {
         ArrayList<String> list=new ArrayList<>();
-        SQLiteDatabase db=getReadableDatabase();
+        SQLiteDatabase db=getReadableDatabase(); //db IS An Instance Of DB In read Only Form
         String col[]={"date"};
+        //Want Only Date Column From TABLENAME2
         Cursor cursor=db.query(TABLENAME2,col,null,null,null,null,null);
 
+        // Stores Index Of Date Column
         int iName= cursor.getColumnIndex("date");
 
         for(cursor.moveToFirst();!cursor.isAfterLast();cursor.moveToNext())
         {
-            list.add(cursor.getString(iName));
+            list.add(cursor.getString(iName)); //Fetching Date By Index in iName & Adding It TO list
         }
         db.close();
         return list;
@@ -104,89 +81,20 @@ public class DBManager extends SQLiteOpenHelper {
         SQLiteDatabase db=getReadableDatabase();
 
         String s="select * from owner_note where date = "+"'"+date+"'";
-        Cursor cursor=db.rawQuery(s,null);
+        Cursor cursor=db.rawQuery(s,null); //rawQuery returns Cursor Object
 
         return cursor;
 
 
     }
 
-    public Cursor fetch_data(String name)
-    {
-        SQLiteDatabase db=getReadableDatabase();
-
-        String s="select * from customer_table where name = "+"'"+name+"'";
-        Cursor cursor=db.rawQuery(s,null);
-
-        return cursor;
-
-
-    }
-
-    public void delete_user(String id)
-    {
-        SQLiteDatabase db=getWritableDatabase();
-        String s="Delete from customer_table where id="+id;
-        db.execSQL(s);
-    }
 
     public void delete_notes(String id)
     {
         SQLiteDatabase db=getWritableDatabase();
         String s="delete from owner_note where id= "+id;
-        db.execSQL(s);
+        db.execSQL(s); // execSQL Used For DML & Create Delete Operations
     }
-
-    public ArrayList<String> getPaid()
-    {
-        SQLiteDatabase db=this.getReadableDatabase();
-        ArrayList<String> list=new ArrayList<>();
-        String col[]={"name"};
-        Cursor cursor=db.query(TABLENAME1,col,"bill = ?",new String[]{"0"},null,null,null);
-        int iName= cursor.getColumnIndex("name");
-        for(cursor.moveToFirst();!cursor.isAfterLast();cursor.moveToNext())
-        {
-            list.add(cursor.getString(iName));
-        }
-        db.close();
-        return list;
-    }
-    public ArrayList<String> getUnpaid()
-    {
-        SQLiteDatabase db=this.getReadableDatabase();
-        ArrayList<String> list=new ArrayList<>();
-        String col[]={"name"};
-        Cursor cursor= db.query(TABLENAME1,col,"bill > ?",new String[]{"0"},null,null,null);
-
-        int iName=cursor.getColumnIndex("name");
-        {
-            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                list.add(cursor.getString(iName));
-            }
-            db.close();
-            return list;
-        }
-    }
-    public void update_data(String id,String name,String mob,String c_name)
-    {
-        SQLiteDatabase db = getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(NAME, name);
-        values.put(MOB, mob);
-        values.put(C_NAME, c_name);
-        db.update(TABLENAME1, values, "id=?", new String[]{id});
-        db.close();
-    }
-
-    public void update_bill(String id,String bill)
-    {
-        SQLiteDatabase db = getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(BILL, bill);
-        db.update(TABLENAME1, values, "id=?", new String[]{id});
-        db.close();
-    }
-    // Add this method in your DBManager class
 
 
     public void update_notes(String date,String notes)
@@ -197,31 +105,7 @@ public class DBManager extends SQLiteOpenHelper {
         db.update(TABLENAME2, values, "date=?", new String[]{date});
         db.close();
     }
-    public ArrayList<String> getPaidForMonth(String month) {
-        return getCustomersWithStatusForMonth("0", month);
-    }
 
-    public ArrayList<String> getUnpaidForMonth(String month) {
-        return getCustomersWithStatusForMonth("1", month);
-    }
-
-    private ArrayList<String> getCustomersWithStatusForMonth(String status, String month) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        ArrayList<String> list = new ArrayList<>();
-        String col[] = {NAME};
-
-        // Fetch customers with the specified billing status for the specified month
-        Cursor cursor = db.query(TABLENAME1, col, BILL + " = ? AND " + MONTH + " = ?", new String[]{status, month}, null, null, null);
-
-        int iName = cursor.getColumnIndex(NAME);
-        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-            list.add(cursor.getString(iName));
-        }
-
-        cursor.close();
-        db.close();
-        return list;
-    }
 
 }
 

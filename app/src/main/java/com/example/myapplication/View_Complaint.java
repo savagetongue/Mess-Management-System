@@ -23,7 +23,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-public class View_complaint extends AppCompatActivity {
+public class View_Complaint extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,6 +47,7 @@ public class View_complaint extends AppCompatActivity {
                     List<DocumentSnapshot> documents = querySnapshot.getDocuments();
 
                     // Sort the documents based on the date
+                    //It'll Compare Each Doc Till All Doc Are Compared And Latest IS Found
                     Collections.sort(documents, new Comparator<DocumentSnapshot>() {
                         @Override
                         public int compare(DocumentSnapshot o1, DocumentSnapshot o2) {
@@ -59,7 +60,9 @@ public class View_complaint extends AppCompatActivity {
 
                                 // Reverse the order for descending sorting
                                 return timestamp2.compareTo(timestamp1);
-                            } else if (date1 instanceof String && date2 instanceof String) {
+                            }
+                            // If TimeStamp Not Worked And IT IS In String
+                            else if (date1 instanceof String && date2 instanceof String) {
                                 String dateString1 = (String) date1;
                                 String dateString2 = (String) date2;
 
@@ -82,8 +85,7 @@ public class View_complaint extends AppCompatActivity {
 
                     // Display sorted complaints
                     for (DocumentSnapshot document : documents) {
-                        // Your existing code to display complaints
-                        // ...
+
                         LinearLayout complaintLayout = new LinearLayout(this);
                         complaintLayout.setOrientation(LinearLayout.VERTICAL);
 
@@ -113,6 +115,7 @@ public class View_complaint extends AppCompatActivity {
                         if (imageUrl != null && !imageUrl.isEmpty()) {
                             ImageView imageView = new ImageView(this);
                             // Use Glide to load and display the image
+                            //Glide Helps TO Load Image Using URL
                             Glide.with(this).load(imageUrl).into(imageView);
                             // Add the ImageView to the layout
                             complaintLayout.addView(imageView);

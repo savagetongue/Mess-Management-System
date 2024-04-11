@@ -19,7 +19,7 @@ import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 
-public class bills_unpaid extends AppCompatActivity {
+public class Bills_Unpaid extends AppCompatActivity {
     ListView unpaid_list;
     EditText searchEditText;
     Button remindAllButton;
@@ -33,7 +33,7 @@ public class bills_unpaid extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bills_unpaid);
+        setContentView(R.layout.bills_unpaid);
 
         db = FirebaseFirestore.getInstance();
         smsManager = SmsManager.getDefault();
@@ -81,6 +81,7 @@ public class bills_unpaid extends AppCompatActivity {
         String billsPath = "bills/" + formattedMonth + "/students";
 
         db.collection(billsPath)
+                // Fetching ID's Of Student Where Unpaid Amount > 0
                 .whereGreaterThan("unpaidAmount", 0)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
@@ -156,7 +157,7 @@ public class bills_unpaid extends AppCompatActivity {
     }
 
     private void navigateToUnpaidAmount(String studentId, String selectedMonth) {
-        Intent intent = new Intent(this, unpaid_amount.class);
+        Intent intent = new Intent(this, Unpaid_Amount.class);
         intent.putExtra("selectedStudentId", studentId);
         intent.putExtra("selectedMonth", selectedMonth);
         startActivity(intent);

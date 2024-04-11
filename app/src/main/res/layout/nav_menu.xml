@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- nav_menu.xml -->
-<!--<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<!--<Student_Home_Screen xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_raise_complaint"
         android:title="Raise a Complaint" />
@@ -8,7 +8,7 @@
         android:id="@+id/menu_give_feedback"
         android:title="Give Feedback" />
 
-</menu>
+</Student_Home_Screen>
 -->
 
 <LinearLayout> <menu xmlns:android="http://schemas.android.com/apk/res/android">

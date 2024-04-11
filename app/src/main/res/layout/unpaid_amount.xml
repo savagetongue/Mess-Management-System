@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/t4"
     android:gravity="center_horizontal"
-    tools:context=".unpaid_amount">
+    tools:context=".Unpaid_Amount">
 
 
     <ImageView

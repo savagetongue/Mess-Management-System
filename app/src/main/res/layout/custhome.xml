@@ -6,14 +6,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity_Home_Screen"
+    tools:context=".Manager_Home_Screen"
     android:background="@drawable/t4"
     android:id="@+id/drawer"
     tools:openDrawer="">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".Activity_Home_Screen">
+        tools:context=".Manager_Home_Screen">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

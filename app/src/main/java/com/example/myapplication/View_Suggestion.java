@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-public class View_suggestion extends AppCompatActivity {
+public class View_Suggestion extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class View_suggestion extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         List<Suggestion> suggestionList = new ArrayList<>();
-
+                        // Iterating For Each DOC
                         for (DocumentSnapshot document : task.getResult()) {
                             String suggestionText = document.getString("text");
 
@@ -46,7 +46,7 @@ public class View_suggestion extends AppCompatActivity {
 
                             if (dateObject instanceof Timestamp) {
                                 Timestamp timestamp = (Timestamp) dateObject;
-                                date = new SimpleDateFormat("MMM d, yyyy h:mm:ss a").format(new Date(timestamp.getSeconds() * 1000));
+                                date = new SimpleDateFormat("MMM d, yyyy h:mm:ss a").format(new Date(timestamp.getSeconds() * 1000));//S to ms as date only supports ms
                             } else if (dateObject instanceof String) {
                                 date = (String) dateObject;
                             }

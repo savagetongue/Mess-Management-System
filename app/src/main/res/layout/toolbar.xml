@@ -11,8 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#89C9EF"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="97dp">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
             android:id="@+id/imageButton"
@@ -20,7 +19,6 @@
             android:layout_height="45dp"
             android:layout_marginTop="4dp"
             android:background="#88C8EE"
-            android:contentDescription="Shivratna Mess"
             android:padding="5dp"
             android:src="@drawable/menu1"
             app:layout_constraintStart_toStartOf="parent"

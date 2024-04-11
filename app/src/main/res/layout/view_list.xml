@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/t4"
-    tools:context=".activity_view_list">
+    tools:context=".View_List">
 
     <EditText
         android:id="@+id/searchEditText"

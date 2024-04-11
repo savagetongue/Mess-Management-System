@@ -11,16 +11,14 @@
 
     <ImageView
         android:id="@+id/imageViewLogo"
-        android:layout_width="375dp"
+        android:layout_width="350dp"
         android:layout_height="400dp"
         android:layout_gravity="center"
         android:layout_marginBottom="0dp"
         android:src="@drawable/red2" />
 
     <Button
-        android:id="@+id/buttonSignIn"
-
-
+        android:id="@+id/student"
         android:layout_width="250dp"
         android:layout_marginTop="20dp"
         android:layout_height="100dp"
@@ -31,24 +29,15 @@
          />
 
     <Button
-        android:id="@+id/buttonSignUp"
+        android:id="@+id/manager"
         android:backgroundTint="#2929CA"
-
-
         android:layout_width="250dp"
         android:layout_height="100dp"
         android:text="Mess Manager"
         android:textSize="15dp"
         android:layout_gravity="center_horizontal"
-        app:layout_constraintHorizontal_bias="0.5"
         android:layout_marginTop="50dp"
       />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineButtons"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="458dp" />
 
 </LinearLayout>

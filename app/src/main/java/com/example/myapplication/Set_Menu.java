@@ -14,7 +14,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Menu_Update extends AppCompatActivity {
+public class Set_Menu extends AppCompatActivity {
 
     private EditText editTextBreakfast;
     private EditText editTextLunch;
@@ -26,7 +26,7 @@ public class Menu_Update extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu_update);
+        setContentView(R.layout.set_menu);
 
         db = FirebaseFirestore.getInstance();
 
@@ -38,7 +38,7 @@ public class Menu_Update extends AppCompatActivity {
         updateMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Save menu items to Firestore
+                // Save Student_Home_Screen items to Firestore
                 updateMenuItems();
             }
         });
@@ -49,20 +49,21 @@ public class Menu_Update extends AppCompatActivity {
         String lunch = editTextLunch.getText().toString();
         String dinner = editTextDinner.getText().toString();
 
-        // Create a map to represent the menu data
+        // Create a map to represent the Student_Home_Screen data
+        // map is used to store key:value below key is string and value is obj
         Map<String, Object> menuData = new HashMap<>();
         menuData.put("breakfast", breakfast);
         menuData.put("lunch", lunch);
         menuData.put("dinner", dinner);
 
-        // Add the menu data to Firestore
+        // Add the Student_Home_Screen data to Firestore
         DocumentReference menuRef = db.collection("menus").document("main_menu");
         menuRef.set(menuData)
                 .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(Menu_Update.this, "Menu Updated!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Set_Menu.this, "Menu Updated!", Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(Menu_Update.this, "Failed to update menu.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Set_Menu.this, "Failed to update Student_Home_Screen.", Toast.LENGTH_SHORT).show();
                 });
     }
 }

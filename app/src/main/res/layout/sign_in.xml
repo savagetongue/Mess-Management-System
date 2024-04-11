@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/hello"
     android:orientation="vertical"
-
     android:padding="16dp">
 
     <ImageView
@@ -24,7 +24,6 @@
         android:textColor="@color/black"
         android:background="@drawable/edit_text_background"
         android:padding="12dp"
-        android:layout_below="@id/imageViewLogo"
         android:backgroundTint="@color/black"
         android:layout_marginTop="16dp" />
 
@@ -38,7 +37,6 @@
         android:backgroundTint="@color/black"
         android:background="@drawable/edit_text_background"
         android:padding="12dp"
-        android:layout_below="@id/editTextUsername"
         android:layout_marginTop="45dp" />
 
     <Button
@@ -46,9 +44,7 @@
         android:id="@+id/buttonSignIn"
         android:layout_width="match_parent"
         android:layout_height="65dp"
-        android:layout_below="@id/editTextPassword"
         android:layout_marginTop="87dp"
-
         android:padding="16dp"
         android:text="Sign In"
          />

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".expense_book"
+    tools:context=".Expense_Book"
     android:orientation="vertical"
     android:background="@drawable/t4"
     >

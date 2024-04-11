@@ -8,8 +8,7 @@
     android:paddingTop="8dp"
     android:paddingBottom="8dp"
     android:paddingStart="16dp"
-    android:paddingEnd="16dp"
-    >
+    android:paddingEnd="16dp">
 
 
     <de.hdodenhof.circleimageview.CircleImageView

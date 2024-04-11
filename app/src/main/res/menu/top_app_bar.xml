@@ -3,27 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Set The Menu -->
-    <group>
+
     <item
         android:id="@+id/Set_The_Menu"
         android:title="Set The Menu"
-        android:icon="@drawable/food"
-        app:showAsAction="always" />
+        android:icon="@drawable/food"/>
 
     <!-- View Complaints -->
     <item
         android:id="@+id/View_Complaints"
         android:title="View Complaints"
-        android:icon="@drawable/complaint"
-        app:showAsAction="always" />
+        android:icon="@drawable/complaint" />
 
     <!-- View Suggestions -->
     <item
         android:id="@+id/View_Suggestions"
         android:title="View Suggestions"
-        android:icon="@drawable/complaint"
-        app:showAsAction="always" />
-    </group>
+        android:icon="@drawable/complaint" />
+
 
     <item
         android:id="@+id/logout"

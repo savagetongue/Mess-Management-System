@@ -24,15 +24,13 @@ import java.util.ArrayList;
 import java.util.Timer;
 
 
-public class Activity_Home_Screen extends AppCompatActivity {
-
+public class Manager_Home_Screen extends AppCompatActivity {
     Button add;
     Button view;
     Button bills;
     Button expense;
     Timer timer;
     DBManager db;
-
     DrawerLayout drawerLayout;
     ImageButton imgbtn;
 
@@ -42,20 +40,22 @@ NavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_screen);
-
+        setContentView(R.layout.manager_home_screen);
+        //This line uses the Dexter library to handle runtime permissions.
+        // It requests permission to send SMS messages and sets up a listener to handle permission responses.
         Dexter.withContext(this)
                 .withPermission(Manifest.permission.SEND_SMS)
                 .withListener(new PermissionListener() {
                     @Override
+                    //Executes If Permission Granted
                     public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-                        db = new DBManager(Activity_Home_Screen.this);
+                        db = new DBManager(Manager_Home_Screen.this);
                         add = findViewById(R.id.add);
 
                         add.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Intent i = new Intent(Activity_Home_Screen.this, AddCustomer.class);
+                                Intent i = new Intent(Manager_Home_Screen.this, Add_Student.class);
                                 startActivity(i);
                             }
                         });
@@ -64,7 +64,7 @@ NavigationView navigationView;
                         bills.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Intent i = new Intent(Activity_Home_Screen.this, MonthSelectionActivity.class);
+                                Intent i = new Intent(Manager_Home_Screen.this, Month_Selection.class);
                                 startActivity(i);
                             }
                         });
@@ -73,30 +73,32 @@ NavigationView navigationView;
                         view.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                ArrayList<String> users = db.get_users();
-                                Intent i = new Intent(Activity_Home_Screen.this, activity_view_list.class);
-                                i.putStringArrayListExtra("users", users);
+                                Intent i = new Intent(Manager_Home_Screen.this, View_List.class);
+
                                 startActivity(i);
                             }
                         });
 
                         expense = findViewById(R.id.expense);
+
+                        //Retrieves Dates From DB Using get_date() Method In DBManager Class
+                        // And Passes It To Expense_Book Activity
                         expense.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Intent i = new Intent(Activity_Home_Screen.this, expense_book.class);
+                                Intent i = new Intent(Manager_Home_Screen.this, Expense_Book.class);
                                 ArrayList<String> list = db.get_date();
                                 i.putStringArrayListExtra("list", list);
                                 startActivity(i);
                             }
                         });
                     }
-
+                    //Executes If Permission Not Granted
                     @Override
                     public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
 
                     }
-
+                    //Executes If Rational Permission Should Be Showed To User
                     @Override
                     public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
 
@@ -105,6 +107,8 @@ NavigationView navigationView;
 
         drawerLayout = findViewById(R.id.drawer);
         imgbtn = findViewById(R.id.imageButton);
+
+        //Since That 3lines Image Is Used As ImageButton By Clicking On It drawerlayout Should Be Opened
         imgbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,6 +116,8 @@ NavigationView navigationView;
             }
         });
         navigationView =findViewById(R.id.navigation);
+
+        //To Get Which Menu Item Is Clicked To Handle The Event
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -119,22 +125,22 @@ NavigationView navigationView;
                 switch (item.getItemId()) {
                     case R.id.Set_The_Menu:
                         Log.d("MenuItemClicked", "Set The Menu Clicked");
-                        Intent intent = new Intent(Activity_Home_Screen.this, Menu_Update.class);
+                        Intent intent = new Intent(Manager_Home_Screen.this, Set_Menu.class);
                         startActivity(intent);
                         return true;
 
                     case R.id.View_Complaints:
-                        Intent intent3 = new Intent(Activity_Home_Screen.this,View_complaint.class);
+                        Intent intent3 = new Intent(Manager_Home_Screen.this, View_Complaint.class);
                         startActivity(intent3);
                         return true;
 
                     case R.id.View_Suggestions:
-                        Intent intent4 = new Intent(Activity_Home_Screen.this,View_suggestion.class);
+                        Intent intent4 = new Intent(Manager_Home_Screen.this, View_Suggestion.class);
                         startActivity(intent4);
                         return true;
 
                     case R.id.logout:
-                        Intent intent2 = new Intent(Activity_Home_Screen.this,Sign_1.class);
+                        Intent intent2 = new Intent(Manager_Home_Screen.this, Sign_In.class);
                         startActivity(intent2);
                         return true;
 

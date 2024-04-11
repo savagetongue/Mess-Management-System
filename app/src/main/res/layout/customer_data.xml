@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/t4"
     android:orientation="vertical"
-    tools:context=".customer_data"
+    tools:context=".Customer_Data"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="-82dp">
 

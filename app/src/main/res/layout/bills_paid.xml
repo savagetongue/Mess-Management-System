@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".bills_paid"
+    tools:context=".Bills_Paid"
     android:background="@drawable/t4"
     android:orientation="vertical">
 

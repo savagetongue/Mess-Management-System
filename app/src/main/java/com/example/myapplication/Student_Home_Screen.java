@@ -20,7 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-public class menu extends AppCompatActivity {
+public class Student_Home_Screen extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ImageButton imgbtn;
 
@@ -32,7 +32,7 @@ public class menu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu_lv);
+        setContentView(R.layout.student_home_screen);
 
         db = FirebaseFirestore.getInstance();
         userArrayList = new ArrayList<>();
@@ -42,7 +42,7 @@ public class menu extends AppCompatActivity {
         listView.setClickable(true);
         listView.setAdapter(adapter);
 
-        // Retrieve menu items from Firestore
+        // Retrieve Student_Home_Screen items from Firestore
         retrieveMenuItems();
     }
 
@@ -56,7 +56,7 @@ public class menu extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        // Retrieve menu items from Firestore
+                        // Retrieve Student_Home_Screen items from Firestore
                         String breakfast = document.getString("breakfast");
                         String lunch = document.getString("lunch");
                         String dinner = document.getString("dinner");
@@ -89,17 +89,17 @@ public class menu extends AppCompatActivity {
                 switch (item.getItemId()) {
 
                     case R.id.Raise_Complaints:
-                        Intent intent3 = new Intent(menu.this, Raise_complaint.class);
+                        Intent intent3 = new Intent(Student_Home_Screen.this, Raise_complaint.class);
                         startActivity(intent3);
                         return true;
 
                     case R.id.Give_Suggestions:
-                        Intent intent4 = new Intent(menu.this, Give_suggestion.class);
+                        Intent intent4 = new Intent(Student_Home_Screen.this, Give_suggestion.class);
                         startActivity(intent4);
                         return true;
 
                     case R.id.logout:
-                        Intent intent2 = new Intent(menu.this, Sign_1.class);
+                        Intent intent2 = new Intent(Student_Home_Screen.this, Sign_In.class);
                         startActivity(intent2);
                         return true;
 

@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class view_note extends AppCompatActivity {
+public class View_Note extends AppCompatActivity {
 
     TextView date_tv;
     Button save_notes, delete_notes;
@@ -21,7 +21,7 @@ public class view_note extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_note);
+        setContentView(R.layout.view_note);
 
         db = new DBManager(this);
         save_notes = findViewById(R.id.save_notes);
@@ -42,9 +42,9 @@ public class view_note extends AppCompatActivity {
             public void onClick(View view) {
                 String u_notes = notes_et.getText().toString();
                 db.update_notes(date, u_notes);
-                Toast.makeText(view_note.this, "Updated", Toast.LENGTH_SHORT).show();
+                Toast.makeText(View_Note.this, "Updated", Toast.LENGTH_SHORT).show();
 
-                // Send back the updated note to expense_book activity
+                // Send back the updated note to Expense_Book activity
                 Intent intent = new Intent();
                 intent.putExtra("updatedNote", u_notes);
                 setResult(RESULT_OK, intent);
@@ -56,7 +56,7 @@ public class view_note extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 db.delete_notes(id.trim());
-                Toast.makeText(view_note.this, "Deleted" + date, Toast.LENGTH_SHORT).show();
+                Toast.makeText(View_Note.this, "Deleted" + date, Toast.LENGTH_SHORT).show();
                 finish();
             }
         });

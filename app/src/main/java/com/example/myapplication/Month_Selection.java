@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MonthSelectionActivity extends AppCompatActivity {
+public class Month_Selection extends AppCompatActivity {
     private ListView monthListView;
     private ArrayList<MonthItem> monthsList;
     private MonthItemAdapter monthsAdapter;
@@ -39,7 +39,7 @@ public class MonthSelectionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_month_selection);
+        setContentView(R.layout.month_selection);
 
         monthListView = findViewById(R.id.monthListView);
         monthsList = new ArrayList<>();
@@ -56,17 +56,17 @@ public class MonthSelectionActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 String selectedMonth = monthsList.get(position).getMonthName();
 
-                Intent intent = new Intent(MonthSelectionActivity.this, Bills.class);
+                Intent intent = new Intent(Month_Selection.this, Bills.class);
                 intent.putExtra("selectedMonth", selectedMonth);
                 startActivity(intent);
             }
         });
 
-        Button createNoteButton = findViewById(R.id.create_note);
-        createNoteButton.setOnClickListener(new View.OnClickListener() {
+        Button addmonth = findViewById(R.id.addmonth);
+        addmonth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MonthSelectionActivity.this, "Added New Month !", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Month_Selection.this, "Added New Month !", Toast.LENGTH_SHORT).show();
                 addNewMonth();
             }
         });
@@ -112,9 +112,9 @@ public class MonthSelectionActivity extends AppCompatActivity {
                                 latestMonth = document.getId();
                             }
 
-                            // Calculate the next month
+                            // Dividing Month 2024-03 -> 2024,03 storing in parts array of string
                             String[] parts = latestMonth.split("-");
-                            int year = Integer.parseInt(parts[0]);
+                            int year = Integer.parseInt(parts[0]); //
                             int month = Integer.parseInt(parts[1]);
 
                             if (month == 12) {
@@ -123,12 +123,12 @@ public class MonthSelectionActivity extends AppCompatActivity {
                             } else {
                                 month++;
                             }
-
+                            // Adds Next Month In Format YYYY (%04d) and MM (%02d)
                             String nextMonthYear = String.format("%04d-%02d", year, month);
 
                             // Add the new month to the "months" collection
                             monthsCollection.document(nextMonthYear)
-                                    .set(new HashMap<>())
+                                    .set(new HashMap<>()) // Creates Doc As Name Of Month 2024-03 Type & It's Empty
                                     .addOnSuccessListener(aVoid ->
                                             Log.d("Firestore", "Document created for " + nextMonthYear + " in months"))
                                     .addOnFailureListener(e ->

@@ -23,19 +23,19 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class activity_view_list extends AppCompatActivity {
+public class View_List extends AppCompatActivity {
     private ListView customerList;
     private EditText searchEditText;
     private FirebaseFirestore db;
-    private static final int REQUEST_CODE_UPDATE_DELETE = 1;
+    private static final int REQUEST_CODE_UPDATE_DELETE = 1; //Used For Communication Betn View_List & Customer Data Activity
 
-    private ArrayList<Student2> studentList;
+    private ArrayList<Student2> studentList; //Dynamic Array
     private StudentAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_list);
+        setContentView(R.layout.view_list);
 
         db = FirebaseFirestore.getInstance();
 
@@ -55,6 +55,7 @@ public class activity_view_list extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 filterUsers(s.toString());
+                // calling filterUsers Method When An Input For Search Is Given In EditText
             }
 
             @Override
@@ -65,7 +66,7 @@ public class activity_view_list extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String selectedUserName = studentList.get(position).getStudentName();
-                Intent intent = new Intent(activity_view_list.this, customer_data.class);
+                Intent intent = new Intent(View_List.this, Customer_Data.class);
                 intent.putExtra("userName", selectedUserName);
                 startActivityForResult(intent, REQUEST_CODE_UPDATE_DELETE);
             }
@@ -87,8 +88,9 @@ public class activity_view_list extends AppCompatActivity {
                                 studentList.add(new Student2(studentName));
                             }
                             adapter.notifyDataSetChanged();
+                            // Tells ListView To Reflect New Changes
                         } else {
-                            Toast.makeText(activity_view_list.this, "Error fetching users", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(View_List.this, "Error fetching users", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -98,10 +100,14 @@ public class activity_view_list extends AppCompatActivity {
         if (query.isEmpty()) {
             fetchUsersFromFirestore(); // Reload the entire list of students
         } else {
+            // Created An Array Of Filtered Students
             ArrayList<Student2> filteredList = new ArrayList<>();
+            // Searching Entered String In Current Listview
             for (Student2 student : studentList) {
+                //Converting Entered String To Lowercase & Matching It With ListView Items
                 if (student.getStudentName().toLowerCase().contains(query.toLowerCase())) {
                     filteredList.add(student);
+                    //Adding Student To filteredList
                 }
             }
             adapter.clear();
@@ -111,6 +117,7 @@ public class activity_view_list extends AppCompatActivity {
     }
 
 
+    // When We Return From Customer Data To View_List Display The ListView Again
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

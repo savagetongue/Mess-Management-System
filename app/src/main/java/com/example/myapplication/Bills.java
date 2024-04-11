@@ -4,14 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class Bills extends AppCompatActivity {
     Button btn_paid, btn_unpaid;
@@ -23,7 +19,7 @@ public class Bills extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bills);
+        setContentView(R.layout.bills);
 
         btn_paid = findViewById(R.id.b_paid);
         btn_unpaid = findViewById(R.id.unpaid_b);
@@ -43,7 +39,7 @@ public class Bills extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Handle the click for the "Paid" button
-                Intent intent = new Intent(Bills.this, bills_paid.class);
+                Intent intent = new Intent(Bills.this, Bills_Paid.class);
                 intent.putExtra("selectedMonth", selectedMonth);
                 intent.putExtra("studentId", studentId);
                 startActivity(intent);
@@ -54,7 +50,7 @@ public class Bills extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Handle the click for the "Unpaid" button
-                Intent intent = new Intent(Bills.this, bills_unpaid.class);
+                Intent intent = new Intent(Bills.this, Bills_Unpaid.class);
                 intent.putExtra("selectedMonth", selectedMonth);
                 startActivity(intent);
 
@@ -64,25 +60,5 @@ public class Bills extends AppCompatActivity {
 
 
 
-    private void initializeUnpaidAmount() {
-        Map<String, Object> initialUnpaid = new HashMap<>();
-        initialUnpaid.put("amount", 2000.0);  // Initial unpaid amount, adjust as needed
 
-        db.collection("students")
-                .document(studentId)
-                .collection("unpaid_amount")
-                .document(selectedMonth)
-                .set(initialUnpaid)
-                .addOnSuccessListener(aVoid -> {
-                    // Now proceed with your logic to open Bills Unpaid activity
-                    Intent intent = new Intent(Bills.this, bills_unpaid.class);
-                    intent.putExtra("selectedMonth", selectedMonth);
-                    intent.putExtra("studentId", studentId);
-                    startActivity(intent);
-                })
-                .addOnFailureListener(e -> {
-                    // Handle failure to add initial unpaid amount
-                    Toast.makeText(Bills.this, "Error initializing unpaid amount", Toast.LENGTH_SHORT).show();
-                });
-    }
 }

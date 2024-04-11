@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MonthSelectionActivity"
+    tools:context=".Month_Selection"
     android:orientation="vertical"
     android:background="@drawable/t4">
 
@@ -26,10 +26,10 @@
         android:layout_width="match_parent"
         android:divider="@color/black"
         android:dividerHeight="1dp"
-        android:layout_height="500dp" />
+        android:layout_height="450dp" />
 
     <Button
-        android:id="@+id/create_note"
+        android:id="@+id/addmonth"
         android:layout_width="65dp"
         android:layout_height="65dp"
 

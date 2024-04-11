@@ -25,7 +25,7 @@
             android:name=".MyAdapter"
             android:exported="false" />
         <activity
-            android:name=".menu"
+            android:name=".Student_Home_Screen"
             android:exported="false" />
         <activity
             android:name=".Menu_lv"
@@ -36,7 +36,7 @@
             android:label="@string/title_activity_demo_drawer"
             android:theme="@style/Theme.MyApplication.NoActionBar" />
         <activity
-            android:name=".Menu_Update"
+            android:name=".Set_Menu"
             android:exported="false" />
         <activity
             android:name=".SignUp"
@@ -45,10 +45,10 @@
             android:name=".tp"
             android:exported="false" />
         <activity
-            android:name=".MonthSelectionActivity"
+            android:name=".Month_Selection"
             android:exported="false" />
         <activity
-            android:name=".Sign_1"
+            android:name=".Sign_In"
             android:exported="false" />
         <activity
             android:name=".TaskActivity"
@@ -63,7 +63,7 @@
             android:name=".MyMenuAdapter"
             android:exported="false" />
         <activity
-            android:name=".SignIn"
+            android:name=".First"
             android:exported="false" />
         <activity
             android:name=".signup"
@@ -76,23 +76,24 @@
             android:exported="false"
             android:label="@string/title_activity_login" />
         <activity
-            android:name=".view_note"
+            android:name=".View_Note"
             android:exported="false" />
         <activity
-            android:name=".unpaid_amount"
+            android:name=".Unpaid_Amount"
             android:exported="false" />
         <activity
-            android:name=".bills_unpaid"
+            android:name=".Bills_Unpaid"
             android:exported="false" />
         <activity
-            android:name=".bills_paid"
+            android:name=".Bills_Paid"
             android:exported="false" />
         <activity
-            android:name=".Create_note"
+            android:name=".Create_Note"
             android:exported="false" />
         <activity
-            android:name=".customer_data"
+            android:name=".Customer_Data"
             android:exported="false" />
+        <!-- Initial First Activity After Launch -->
         <activity
             android:name=".main_screen1"
             android:exported="true">
@@ -103,10 +104,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".expense_book"
+            android:name=".Expense_Book"
             android:exported="true" />
         <activity
-            android:name=".View_complaint"
+            android:name=".View_Complaint"
             android:exported="true" />
         <activity
             android:name=".Utils"
@@ -121,19 +122,19 @@
             android:name=".Give_suggestion"
             android:exported="true" />
         <activity
-            android:name=".View_suggestion"
+            android:name=".View_Suggestion"
             android:exported="true" />
         <activity
             android:name=".Bills"
             android:exported="true" />
         <activity
-            android:name=".activity_view_list"
+            android:name=".View_List"
             android:exported="true" />
         <activity
-            android:name=".AddCustomer"
+            android:name=".Add_Student"
             android:exported="true" />
         <activity
-            android:name=".Activity_Home_Screen"
+            android:name=".Manager_Home_Screen"
             android:exported="true" />
         <activity
             android:name=".MainActivity"

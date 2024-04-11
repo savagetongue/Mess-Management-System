@@ -2,8 +2,6 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Matrix;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -176,31 +174,8 @@ public class Raise_complaint extends AppCompatActivity {
                 // Convert the selected image URI to Bitmap
                 selectedImageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
             } catch (IOException e) {
-                e.printStackTrace();
+                e.printStackTrace(); // gives logcat output (erros)
             }
         }
-    }
-
-
-    private Bitmap rotateImageIfRequired(Bitmap bitmap, Uri selectedImageUri) throws IOException {
-        ExifInterface ei = new ExifInterface(selectedImageUri.getPath());
-        int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-
-        switch (orientation) {
-            case ExifInterface.ORIENTATION_ROTATE_90:
-                return rotateImage(bitmap, 90);
-            case ExifInterface.ORIENTATION_ROTATE_180:
-                return rotateImage(bitmap, 180);
-            case ExifInterface.ORIENTATION_ROTATE_270:
-                return rotateImage(bitmap, 270);
-            default:
-                return bitmap;
-        }
-    }
-
-    private Bitmap rotateImage(Bitmap bitmap, float degrees) {
-        Matrix matrix = new Matrix();
-        matrix.postRotate(degrees);
-        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 }

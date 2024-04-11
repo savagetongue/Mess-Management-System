@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Create_note extends AppCompatActivity {
+public class Create_Note extends AppCompatActivity {
 
     Button save;
     EditText note_et;
@@ -20,27 +20,27 @@ public class Create_note extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_note);
+        setContentView(R.layout.create_note);
 
 
-        LocalDate today = LocalDate.now();
+        LocalDate today = LocalDate.now(); //Gets Todays Date
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String date = today.format(formatter);
+        String date = today.format(formatter); // Convert To dd-MM-yyyy Format
 
         save=findViewById(R.id.save);
 
         note_et=findViewById(R.id.note_et);
 
 
-        db=new DBManager(Create_note.this);
+        db=new DBManager(Create_Note.this);
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 text=note_et.getText().toString();
-                Toast.makeText(Create_note.this, ""+date+"     "+text, Toast.LENGTH_SHORT).show();
+                Toast.makeText(Create_Note.this, ""+date+"     "+text, Toast.LENGTH_SHORT).show();
                 db.insert_note(date,text);
-                Toast.makeText(Create_note.this, "Note Saved", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Create_Note.this, "Note Saved", Toast.LENGTH_SHORT).show();
             }
         });
 
